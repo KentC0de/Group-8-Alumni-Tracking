@@ -1,25 +1,22 @@
 <div class="login-container">
   <div class="login-card">
 
-    <!-- Logo -->
     <div class="system-name">
       <img src="images/logo.png" alt="System Logo" class="logo">
     </div>
 
-    <!-- Tabs -->
     <div class="auth-tabs">
-      <div class="tab active">Login</div>
-      <div class="tab">Sign Up</div>
+      <div class="tab active">Admin Login</div>
     </div>
 
-    <form (ngSubmit)="onLogin()">
+    <form (ngSubmit)="onAdminLogin()">
 
       <div class="form-group">
         <input
-          type="email"
-          placeholder="Email"
-          [(ngModel)]="email"
-          name="email"
+          type="text"
+          placeholder="Admin Username"
+          [(ngModel)]="username"
+          name="username"
         />
       </div>
 
@@ -32,17 +29,10 @@
         />
       </div>
 
-      <!-- Error message -->
-      <div class="error">
-        {{ error }}
-      </div>
+      <div class="error">{{ error }}</div>
 
       <button type="submit">Log In</button>
 
-      <!-- Admin access text (NOW CLICKABLE) -->
-      <div class="admin-access" (click)="goToAdminLogin()">
-        Administrator Access
-      </div>
     </form>
 
   </div>
