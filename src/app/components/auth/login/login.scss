@@ -1,0 +1,107 @@
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #1a1851;
+}
+
+.login-card {
+  width: 270px;
+  min-height: 270px; /* prevents shrinking */
+  padding: 32px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+}
+
+/* System Name */
+.system-name {
+  font-size: 25px;
+  font-weight: 600;
+  color: #1a1851;
+  margin-bottom: 20px;
+}
+
+/* Tabs */
+.auth-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 70px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  position: relative;
+  width: 80px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  color: #999;
+  cursor: pointer;
+  padding-bottom: 6px;
+}
+
+.tab.active {
+  color: #1a1851;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 3px;
+  background: #fcb316;
+  border-radius: 2px;
+}
+
+/* Form */
+.form-group {
+  margin-bottom: 16px;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+
+  &:focus {
+    outline: none;
+    border-color: #fcb316;
+  }
+}
+
+button {
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #1a1851;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: #fcb316;
+    color: #1a1851;
+  }
+}
+
+/* Error */
+.error {
+  min-height: 18px;
+  margin-bottom: 12px;
+  color: #d32f2f;
+  font-size: 14px;
+  text-align: center;
+}

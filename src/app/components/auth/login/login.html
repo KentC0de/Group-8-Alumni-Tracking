@@ -1,0 +1,48 @@
+<div class="login-container">
+  <div class="login-card">
+
+    <!-- Logo / System Name (placeholder) -->
+    <div class="system-name">
+      LOGO
+    </div>
+
+    <!-- Tabs -->
+    <div class="auth-tabs">
+      <div class="tab active">
+        Login
+      </div>
+      <div class="tab">
+        Sign Up
+      </div>
+    </div>
+
+    <form (ngSubmit)="onLogin()">
+      <div class="error">
+        {{ error }}
+      </div>
+
+      <div class="form-group">
+        <label></label>
+        <input
+          type="email"
+          placeholder="Email"
+          [(ngModel)]="email"
+          name="email"
+        />
+      </div>
+
+      <div class="form-group">
+        <label></label>
+        <input
+          type="password"
+          placeholder="Password"
+          [(ngModel)]="password"
+          name="password"
+        />
+      </div>
+
+      <button type="submit">Log In</button>
+    </form>
+
+  </div>
+</div>
