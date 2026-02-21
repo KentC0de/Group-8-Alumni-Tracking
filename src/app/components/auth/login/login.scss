@@ -1,4 +1,3 @@
-/* Page background */
 .login-container {
   min-height: 100vh;
   display: flex;
@@ -7,28 +6,26 @@
   background: #1a1851;
 }
 
-/* Login card */
 .login-card {
-  width: 380px;
-  padding: 44px;
+  width: 340px;
+  padding: 30px;
   background: #ffffff;
   border-radius: 20px;
   box-shadow: 0 22px 45px rgba(0, 0, 0, 0.28);
   text-align: center;
   font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
 }
 
-/* Logo container */
 .system-name {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 26px;
+  margin-bottom: 22px;
 }
 
-/* Logo */
 .logo {
-  width: 160px;
+  width: 140px;
   height: auto;
   display: block;
 }
@@ -37,20 +34,19 @@
 .auth-tabs {
   display: flex;
   justify-content: center;
-  gap: 90px;
-  margin-top: 12px; 
-  margin-bottom: 30px;
+  gap: 5px;
+  margin-bottom: 22px;
 }
 
 .tab {
   position: relative;
-  width: 100px;
+  width: 95px;
   text-align: center;
-  font-size: 21px;
+  font-size: 17px;
   font-weight: 500;
-  color: #999;
+  color: #777;
   cursor: pointer;
-  padding-bottom: 7px;
+  padding-bottom: 6px;
 }
 
 .tab.active {
@@ -60,74 +56,138 @@
 .tab.active::after {
   content: '';
   position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1px;
+  width: 57%;
   height: 3px;
   background: #fcb316;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
-/* Form */
+form {
+  width: 280px;
+  margin: 0 auto;
+}
+
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 12px;
 }
 
 /* Inputs */
 input {
   width: 100%;
-  padding: 16px;
+  height: 42px;
+  padding: 0 14px;
+  line-height: 42px;
   border-radius: 12px;
   border: 1px solid #ccc;
-  font-size: 16px;
+  font-size: 13px;
   font-family: 'Inter', sans-serif;
+  box-sizing: border-box;
+}
 
-  &:focus {
-    outline: none;
-    border-color: #fcb316;
-  }
+input:focus {
+  outline: none;
+  border-color: #fcb316;
+}
+
+input::placeholder {
+  opacity: 1;
+  color: #8a8a8a;
+}
+
+input.input-error::placeholder {
+  color: #ff6969;
+}
+
+/* Password masking */
+.masked {
+  -webkit-text-security: disc;
 }
 
 /* Button */
 button {
   width: 100%;
-  margin-top: 20px;
-  padding: 16px;
+  height: 42px;
+  margin-top: 10px;
   border: none;
-  border-radius: 12px;
+  border-radius: 13px;
   background: #1a1851;
   color: #ffffff;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 13px;
+  font-weight: 100;
   cursor: pointer;
   transition: all 0.2s ease;
-
-  &:hover {
-    background: #fcb316;
-    color: #1a1851;
-  }
 }
 
-/* Admin access text */
+button:hover {
+  background: #fcb316;
+  color: #1a1851;
+}
+
+/* ✅ Forgot Password — YELLOW HOVER ONLY */
 .admin-access {
   margin-top: 12px;
   font-size: 11px;
   color: #9a9a9a;
-  text-align: center;
   cursor: pointer;
+
+  display: inline-block;
+  text-decoration: none !important;
+
   transition: color 0.2s ease;
-
-  &:hover {
-    color: #fcb316;
-  }
 }
 
-.error {
-  height: 5px;              /* reserves space */
-  margin: -10px 0 0px;
-  font-size: 12px;
-  color: #d32f2f;
-  text-align: center;
-  line-height: 14px;
+.admin-access:hover {
+  color: #fcb316;
+  text-decoration: none !important;
 }
 
+.admin-access:visited {
+  color: #9a9a9a;
+  text-decoration: none !important;
+}
+
+.admin-access:focus,
+.admin-access:active {
+  outline: none;
+  text-decoration: none !important;
+}
+
+/* Icons */
+.input-group {
+  position: relative;
+}
+
+.material-icons {
+  font-size: 20px;
+}
+
+.input-icon {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #777;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 20px;
+  color: #777;
+  user-select: none;
+}
+
+.eye-icon:hover {
+  color: #fcb316;
+}
+
+.input-group input {
+  padding-left: 46px;
+  padding-right: 46px;
+}

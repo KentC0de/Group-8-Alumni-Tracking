@@ -1,48 +1,62 @@
 <div class="login-container">
   <div class="login-card">
 
-    <!-- Logo -->
     <div class="system-name">
       <img src="images/logo.png" alt="System Logo" class="logo">
     </div>
 
-    <!-- Tabs -->
     <div class="auth-tabs">
-      <div class="tab active">Login</div>
-      <div class="tab">Sign Up</div>
+      <div class="tab active">LOGIN</div>
+      <div class="tab">SIGN UP</div>
     </div>
 
-    <form (ngSubmit)="onLogin()">
+    <form novalidate>
 
-      <div class="form-group">
+      <!-- EMAIL -->
+      <div class="form-group input-group">
+        <span class="material-icons input-icon">mail</span>
+
         <input
           type="email"
-          placeholder="Email"
           [(ngModel)]="email"
           name="email"
+          autocomplete="email"
+          [class.input-error]="submitted && !email.trim()"
+          [placeholder]="(submitted && !email.trim()) ? 'Please enter your email' : 'Email'"
         />
       </div>
 
-      <div class="form-group">
+      <!-- PASSWORD (type is ALWAYS text to prevent Edge native eye) -->
+      <div class="form-group input-group">
+        <span class="material-icons input-icon">lock</span>
+
         <input
-          type="password"
-          placeholder="Password"
+          type="text"
           [(ngModel)]="password"
+          (ngModelChange)="onPasswordChange($event)"
           name="password"
+          autocomplete="current-password"
+          [class.masked]="!showPassword"
+          [class.input-error]="submitted && !password.trim()"
+          [placeholder]="(submitted && !password.trim()) ? 'Please enter your password' : 'Password'"
         />
+
+        <!-- ✅ ONLY SHOW WHEN USER TYPES -->
+        <span
+          *ngIf="hasPassword"
+          class="material-icons eye-icon"
+          (click)="togglePassword()"
+        >
+          {{ showPassword ? 'visibility_off' : 'visibility' }}
+        </span>
       </div>
 
-      <!-- Error message -->
-      <div class="error">
-        {{ error }}
-      </div>
+      <button type="button" (click)="onLogin()">Log In</button>
 
-      <button type="submit">Log In</button>
+      <a class="admin-access" routerLink="/forgot-password">
+  Forgot Password?
+</a>
 
-      <!-- Admin access text (NOW CLICKABLE) -->
-      <div class="admin-access" (click)="goToAdminLogin()">
-        Administrator Access
-      </div>
     </form>
 
   </div>

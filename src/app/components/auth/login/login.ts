@@ -13,20 +13,40 @@ import { Router, RouterModule } from '@angular/router';
 export class Login {
   email = '';
   password = '';
-  error = '';
+
+  submitted = false;
+
+  showPassword = false;
+  hasPassword = false;
 
   constructor(private router: Router) {}
 
-  onLogin() {
-    if (!this.email || !this.password) {
-      this.error = 'Please complete all required fields';
-      return;
+  onPasswordChange(value: string) {
+    this.password = value ?? '';
+    this.hasPassword = this.password.trim().length > 0;
+
+    if (!this.hasPassword) {
+      this.showPassword = false;
     }
-    this.error = '';
   }
 
-  // 🔥 THIS MUST EXIST
-  goToAdminLogin() {
-    this.router.navigate(['/admin-login']);
+  onLogin() {
+    this.submitted = true;
+
+    const email = this.email.trim();
+    const password = this.password.trim();
+
+    if (!email || !password) return;
+
+    console.log('LOGIN:', email, password);
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
+
+  goToForgotPassword() {
+  console.log('CLICKED FORGOT PASSWORD');
+  this.router.navigate(['/forgot-password']);
   }
 }
