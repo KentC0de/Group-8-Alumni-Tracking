@@ -1,3 +1,4 @@
+<!-- src/app/components/auth/login/login.html -->
 <div class="login-container">
   <div class="login-card">
 
@@ -5,9 +6,10 @@
       <img src="images/logo.png" alt="System Logo" class="logo">
     </div>
 
+    <!-- ✅ tabs now navigate -->
     <div class="auth-tabs">
-      <div class="tab active">LOGIN</div>
-      <div class="tab">SIGN UP</div>
+      <a routerLink="/login" class="tab active">LOGIN</a>
+      <a routerLink="/signup" class="tab">SIGN UP</a>
     </div>
 
     <form novalidate>
@@ -41,7 +43,6 @@
           [placeholder]="(submitted && !password.trim()) ? 'Please enter your password' : 'Password'"
         />
 
-        <!-- ✅ ONLY SHOW WHEN USER TYPES -->
         <span
           *ngIf="hasPassword"
           class="material-icons eye-icon"

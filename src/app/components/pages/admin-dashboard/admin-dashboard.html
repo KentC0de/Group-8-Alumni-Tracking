@@ -1,0 +1,99 @@
+<!-- KPI Cards -->
+<div
+  style="display:grid; gap:16px; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));"
+>
+  <!-- Pending Verifications -->
+  <a routerLink="/admin/verify-alumni" style="text-decoration:none; color:inherit;">
+    <p-card header="Pending Verifications">
+      <ng-container *ngIf="!loadingStats; else skPendingCount">
+        <div style="font-size:28px; font-weight:700;">{{ pendingUsers }}</div>
+      </ng-container>
+      <ng-template #skPendingCount>
+        <p-skeleton height="28px" width="80px"></p-skeleton>
+      </ng-template>
+    </p-card>
+  </a>
+
+  <!-- Total Users -->
+  <a routerLink="/admin/alumni-records" style="text-decoration:none; color:inherit;">
+    <p-card header="Total Users">
+      <ng-container *ngIf="!loadingStats; else skTotal">
+        <div style="font-size:28px; font-weight:700;">{{ totalUsers }}</div>
+      </ng-container>
+      <ng-template #skTotal>
+        <p-skeleton height="28px" width="80px"></p-skeleton>
+      </ng-template>
+    </p-card>
+  </a>
+
+  <!-- Active Accounts -->
+  <a routerLink="/admin/manage-accounts" style="text-decoration:none; color:inherit;">
+    <p-card header="Active Accounts">
+      <ng-container *ngIf="!loadingStats; else skActive">
+        <div style="font-size:28px; font-weight:700;">{{ activeUsers }}</div>
+      </ng-container>
+      <ng-template #skActive>
+        <p-skeleton height="28px" width="80px"></p-skeleton>
+      </ng-template>
+    </p-card>
+  </a>
+
+  <!-- Upcoming Events -->
+  <a routerLink="/admin/events-announcements" style="text-decoration:none; color:inherit;">
+    <p-card header="Upcoming Events">
+      <ng-container *ngIf="!loadingStats; else skEvents">
+        <div style="font-size:28px; font-weight:700;">{{ upcomingEvents }}</div>
+      </ng-container>
+      <ng-template #skEvents>
+        <p-skeleton height="28px" width="80px"></p-skeleton>
+      </ng-template>
+    </p-card>
+  </a>
+</div>
+
+<!-- Pending Alumni Preview Table -->
+<div style="margin-top:18px;">
+  <p-card header="Pending Alumni (Preview)">
+    <ng-container *ngIf="!loadingPending; else skTable">
+      <p-table
+        [value]="pendingPreview"
+        [paginator]="false"
+        [rows]="5"
+        [responsiveLayout]="'scroll'"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th>School ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th style="width: 120px;">Action</th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-u>
+          <tr>
+            <td>{{ u.schoolId }}</td>
+            <td>{{ u.fullName }}</td>
+            <td>{{ u.email }}</td>
+            <td>
+              <button pButton type="button" label="Verify" icon="pi pi-check"
+                routerLink="/admin/verify-alumni"></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+      <div *ngIf="pendingPreview.length === 0" style="opacity:.7; padding:10px 0;">
+        No pending alumni right now.
+      </div>
+    </ng-container>
+
+    <ng-template #skTable>
+      <p-skeleton height="18px" width="100%"></p-skeleton>
+      <div style="height:10px;"></div>
+      <p-skeleton height="18px" width="100%"></p-skeleton>
+      <div style="height:10px;"></div>
+      <p-skeleton height="18px" width="100%"></p-skeleton>
+    </ng-template>
+  </p-card>
+</div>

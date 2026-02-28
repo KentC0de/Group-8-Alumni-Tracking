@@ -1,18 +1,58 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
+      "schoolId": "ADMIN-0001",
+      "fullName": "Admin User",
       "email": "admin@test.com",
       "password": "1234",
       "role": "admin",
-      "name": "Admin User"
+      "status": "verified",
+      "isActive": true,
+      "createdAt": "2026-02-28T00:00:00.000Z"
     },
     {
-      "id": 2,
+      "id": "2",
+      "schoolId": "2020-0002",
+      "fullName": "Alumni User",
       "email": "alumni@test.com",
       "password": "1234",
       "role": "alumni",
-      "name": "Alumni User"
+      "status": "rejected",
+      "isActive": false,
+      "createdAt": "2026-02-28T00:00:00.000Z"
+    },
+    {
+      "id": "fc14",
+      "schoolId": "2023307034",
+      "fullName": "Jols Ermee Zamayla",
+      "email": "jezamayla092@gmail.com",
+      "password": "1234567",
+      "role": "alumni",
+      "status": "rejected",
+      "isActive": false,
+      "createdAt": "2026-02-28T00:23:06.569Z"
+    },
+    {
+      "id": "d6f3",
+      "schoolId": "12313141243",
+      "fullName": "Bayptt",
+      "email": "wad@gmail.com",
+      "password": "wad",
+      "role": "alumni",
+      "status": "verified",
+      "isActive": true,
+      "createdAt": "2026-02-28T01:12:39.587Z"
     }
-  ]
+  ],
+  "events": [
+    {
+      "id": "1",
+      "title": "Alumni Homecoming",
+      "date": "2026-03-15",
+      "location": "Campus Gym",
+      "description": "See you all!"
+    }
+  ],
+  "announcements": []
 }

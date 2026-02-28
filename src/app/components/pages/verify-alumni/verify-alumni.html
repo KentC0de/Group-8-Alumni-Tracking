@@ -1,0 +1,37 @@
+<div class="verify-wrap">
+  <h2 class="title">Verify Alumni</h2>
+  <p class="sub">Approve or reject accounts created from Sign Up.</p>
+
+  <div class="loading" *ngIf="loading">Loading...</div>
+
+  <div class="card">
+    <ng-container *ngIf="(pendingUsers$ | async) as pendingUsers">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>School ID</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th class="right">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let u of pendingUsers">
+            <td>{{ u.schoolId }}</td>
+            <td>{{ u.fullName }}</td>
+            <td>{{ u.email }}</td>
+            <td class="right">
+              <button class="btn verify" (click)="approve(u)">✓ Verify</button>
+              <button class="btn reject" (click)="reject(u)">Reject</button>
+            </td>
+          </tr>
+
+          <tr *ngIf="!loading && pendingUsers.length === 0">
+            <td colspan="4" class="empty">No pending alumni to verify.</td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+  </div>
+</div>

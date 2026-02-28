@@ -1,3 +1,4 @@
+// src/app/components/auth/login/login.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,8 +11,10 @@ type User = {
   id: string | number;
   email: string;
   password: string;
-  role: 'admin' | 'alumni';
+  role: 'admin' | 'alumni' | 'officer';
   name?: string;
+  status?: 'pending' | 'verified' | 'rejected';
+  isActive?: boolean;
 };
 
 @Component({
@@ -34,7 +37,6 @@ export class Login {
   onPasswordChange(value: string) {
     this.password = value ?? '';
     this.hasPassword = this.password.trim().length > 0;
-
     if (!this.hasPassword) this.showPassword = false;
   }
 
@@ -79,6 +81,35 @@ export class Login {
             return;
           }
 
+          // ✅ status checks
+          if (user.status === 'pending') {
+            Swal.fire({
+              icon: 'info',
+              title: 'Account Pending',
+              text: 'Your account is waiting for admin verification.',
+            });
+            return;
+          }
+
+          if (user.status === 'rejected') {
+            Swal.fire({
+              icon: 'error',
+              title: 'Account Rejected',
+              text: 'Your registration was rejected by admin.',
+            });
+            return;
+          }
+
+          // ✅ active check
+          if (user.isActive === false) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Account Disabled',
+              text: 'Your account was disabled by admin.',
+            });
+            return;
+          }
+
           localStorage.setItem('currentUser', JSON.stringify(user));
 
           Swal.fire({
@@ -86,10 +117,7 @@ export class Login {
             title: 'Login successful',
             timer: 1000,
             showConfirmButton: false,
-          }).then(() => {
-            // For tomorrow: send everyone to admin so you have a destination
-            this.router.navigate(['/admin']);
-          });
+          }).then(() => this.router.navigate(['/admin']));
         },
         error: () => {
           Swal.fire({

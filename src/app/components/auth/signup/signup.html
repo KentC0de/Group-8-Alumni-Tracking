@@ -1,0 +1,80 @@
+<!-- src/app/components/auth/signup/signup.html -->
+<div class="login-container">
+  <div class="login-card">
+
+    <div class="system-name">
+      <img src="images/logo.png" alt="System Logo" class="logo">
+    </div>
+
+    <div class="auth-tabs">
+      <a routerLink="/login" class="tab">LOGIN</a>
+      <a routerLink="/signup" class="tab active">SIGN UP</a>
+    </div>
+
+    <form novalidate>
+      <div class="form-group input-group">
+        <span class="material-icons input-icon">badge</span>
+        <input
+          type="text"
+          [(ngModel)]="schoolId"
+          name="schoolId"
+          [class.input-error]="submitted && !schoolId.trim()"
+          [placeholder]="(submitted && !schoolId.trim()) ? 'Please enter your school ID' : 'School ID'"
+        />
+      </div>
+
+      <div class="form-group input-group">
+        <span class="material-icons input-icon">person</span>
+        <input
+          type="text"
+          [(ngModel)]="fullName"
+          name="fullName"
+          [class.input-error]="submitted && !fullName.trim()"
+          [placeholder]="(submitted && !fullName.trim()) ? 'Please enter your full name' : 'Full Name'"
+        />
+      </div>
+
+      <div class="form-group input-group">
+        <span class="material-icons input-icon">mail</span>
+        <input
+          type="email"
+          [(ngModel)]="email"
+          name="email"
+          autocomplete="email"
+          [class.input-error]="submitted && !email.trim()"
+          [placeholder]="(submitted && !email.trim()) ? 'Please enter your email' : 'Email'"
+        />
+      </div>
+
+      <div class="form-group input-group">
+        <span class="material-icons input-icon">lock</span>
+        <input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          [class.input-error]="submitted && !password.trim()"
+          [placeholder]="(submitted && !password.trim()) ? 'Please enter a password' : 'Password'"
+        />
+      </div>
+
+      <div class="form-group input-group">
+        <span class="material-icons input-icon">lock</span>
+        <input
+          type="password"
+          [(ngModel)]="confirmPassword"
+          name="confirmPassword"
+          [class.input-error]="submitted && !confirmPassword.trim()"
+          [placeholder]="(submitted && !confirmPassword.trim()) ? 'Please confirm your password' : 'Confirm Password'"
+        />
+      </div>
+
+      <button type="button" (click)="onSubmit()" [disabled]="loading">
+        {{ loading ? 'Creating...' : 'Create Account' }}
+      </button>
+
+      <div class="msg" *ngIf="submitted && message">{{ message }}</div>
+      <div class="hint">New accounts are <b>pending</b> until admin verifies.</div>
+    </form>
+
+  </div>
+</div>

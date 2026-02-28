@@ -30,8 +30,7 @@
   display: block;
 }
 
-/* ================= TABS ================= */
-
+/* Tabs */
 .auth-tabs {
   display: flex;
   justify-content: center;
@@ -39,8 +38,7 @@
   margin-bottom: 22px;
 }
 
-/* Tab link style */
-.auth-tabs .tab {
+.tab {
   position: relative;
   width: 95px;
   text-align: center;
@@ -49,38 +47,26 @@
   color: #777;
   cursor: pointer;
   padding-bottom: 6px;
+
+  /* so <a class="tab"> looks like your old <div class="tab"> */
+  text-decoration: none;
   display: inline-block;
-  text-decoration: none;
 }
 
-/* Remove default underline in all states */
-.auth-tabs .tab:link,
-.auth-tabs .tab:visited,
-.auth-tabs .tab:hover,
-.auth-tabs .tab:active {
-  text-decoration: none;
-  color: #777;
-}
-
-/* Active tab */
-.auth-tabs .tab.active {
+.tab.active {
   color: #000000;
 }
 
-/* Yellow underline */
-.auth-tabs .tab.active::after {
+.tab.active::after {
   content: '';
   position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 15%;
   bottom: 1px;
-  width: 57%;
+  width: 70%;
   height: 3px;
   background: #fcb316;
   border-radius: 4px;
 }
-
-/* ================= FORM ================= */
 
 form {
   width: 280px;
@@ -98,31 +84,39 @@ form {
   padding: 0 14px;
   line-height: 42px;
   border-radius: 12px;
-  border: 1px solid #ccc;
+
+  /* ✅ remove hairline border and use inset outline */
+  border: none;
+  outline: none;
+  box-shadow: inset 0 0 0 1px #ededed;
+  appearance: none;
+  -webkit-appearance: none;
+
   font-size: 13px;
   font-family: 'Inter', sans-serif;
   box-sizing: border-box;
   background: #ffffff;
   color: #000000;
+  transition: all 0.2s ease;
 }
 
 .login-container input:focus {
   outline: none;
-  border-color: #fcb316;
+  box-shadow: inset 0 0 0 1.5px #fcb316;
 }
 
-/* Placeholder */
+/* Default placeholder */
 .login-container input::placeholder {
   opacity: 1;
   color: #8a8a8a;
 }
 
-/* Error placeholder */
+/* Error placeholder (forced red) */
 .login-container .input-group input.input-error::placeholder {
   color: #ff6969 !important;
 }
 
-/* Password masking */
+/* Password masking (not needed in signup, but safe to keep) */
 .masked {
   -webkit-text-security: disc;
 }
@@ -132,12 +126,11 @@ form {
 .login-container input:-webkit-autofill:hover,
 .login-container input:-webkit-autofill:focus {
   -webkit-text-fill-color: #000000;
-  box-shadow: 0 0 0px 1000px #ffffff inset;
+  box-shadow: inset 0 0 0 1px #ededed, 0 0 0px 1000px #ffffff inset;
   transition: background-color 9999s ease-in-out 0s;
 }
 
-/* ================= BUTTON ================= */
-
+/* Button */
 button {
   width: 100%;
   height: 42px;
@@ -157,8 +150,7 @@ button:hover {
   color: #1a1851;
 }
 
-/* ================= ICONS ================= */
-
+/* Icons */
 .input-group {
   position: relative;
 }
@@ -194,3 +186,17 @@ button:hover {
   padding-left: 46px;
   padding-right: 46px;
 }
+
+/* optional: message text under button */
+.msg {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #333;
+}
+
+.hint {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #777;
+}
+

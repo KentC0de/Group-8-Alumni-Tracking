@@ -1,0 +1,80 @@
+.verify-wrap {
+  padding: 18px;
+  color: #111; // ✅ forces readable text
+}
+
+.title {
+  margin: 0 0 6px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #111;
+}
+
+.sub {
+  margin: 0 0 14px;
+  font-size: 14px;
+  color: #444;
+  opacity: 0.85;
+}
+
+.loading {
+  margin: 10px 0;
+  font-weight: 600;
+  color: #333;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 14px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+}
+
+.tbl {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.tbl th,
+.tbl td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  font-size: 14px;
+  color: #111; // ✅ forces readable table text
+}
+
+.tbl th {
+  font-weight: 800;
+  color: #111;
+}
+
+.right {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.empty {
+  text-align: center;
+  padding: 18px;
+  color: #555;
+}
+
+.btn {
+  border: 0;
+  padding: 9px 12px;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.verify {
+  background: #22c55e;
+  color: #fff;
+}
+
+.reject {
+  background: #ef4444;
+  color: #fff;
+}
