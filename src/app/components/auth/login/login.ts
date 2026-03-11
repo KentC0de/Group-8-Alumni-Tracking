@@ -1,4 +1,3 @@
-// src/app/components/auth/login/login.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -13,6 +12,7 @@ type User = {
   password: string;
   role: 'admin' | 'alumni' | 'officer';
   name?: string;
+  fullName?: string;
   status?: 'pending' | 'verified' | 'rejected';
   isActive?: boolean;
 };
@@ -34,13 +34,16 @@ export class Login {
 
   constructor(private router: Router, private http: HttpClient) {}
 
-  onPasswordChange(value: string) {
+  onPasswordChange(value: string): void {
     this.password = value ?? '';
     this.hasPassword = this.password.trim().length > 0;
-    if (!this.hasPassword) this.showPassword = false;
+
+    if (!this.hasPassword) {
+      this.showPassword = false;
+    }
   }
 
-  onLogin() {
+  onLogin(): void {
     this.submitted = true;
 
     const email = this.email.trim().toLowerCase();
@@ -56,9 +59,7 @@ export class Login {
     }
 
     this.http
-      .get<User[]>(
-        `http://localhost:3000/users?email=${encodeURIComponent(email)}`
-      )
+      .get<User[]>(`http://localhost:3000/users?email=${encodeURIComponent(email)}`)
       .subscribe({
         next: (users) => {
           if (!users.length) {
@@ -81,7 +82,6 @@ export class Login {
             return;
           }
 
-          // ✅ status checks
           if (user.status === 'pending') {
             Swal.fire({
               icon: 'info',
@@ -100,7 +100,6 @@ export class Login {
             return;
           }
 
-          // ✅ active check
           if (user.isActive === false) {
             Swal.fire({
               icon: 'error',
@@ -111,13 +110,26 @@ export class Login {
           }
 
           localStorage.setItem('currentUser', JSON.stringify(user));
+          localStorage.setItem('token', 'logged-in');
+
+          let redirectUrl = '/login';
+
+          if (user.role === 'admin') {
+            redirectUrl = '/admin/dashboard';
+          } else if (user.role === 'alumni') {
+            redirectUrl = '/alumni/dashboard';
+          } else if (user.role === 'officer') {
+            redirectUrl = '/admin/dashboard';
+          }
 
           Swal.fire({
             icon: 'success',
             title: 'Login successful',
             timer: 1000,
             showConfirmButton: false,
-          }).then(() => this.router.navigate(['/admin']));
+          }).then(() => {
+            this.router.navigate([redirectUrl]);
+          });
         },
         error: () => {
           Swal.fire({
@@ -129,7 +141,7 @@ export class Login {
       });
   }
 
-  togglePassword() {
+  togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 }

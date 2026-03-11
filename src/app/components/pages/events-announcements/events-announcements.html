@@ -1,1 +1,131 @@
-<h2>Events & Announcements</h2>
+<div class="events-page">
+  <div class="page-header">
+    <div class="header-text">
+      <h1>Events & Announcements</h1>
+      <p>
+        {{ isAdmin
+          ? 'Manage upcoming events and announcements for alumni.'
+          : 'Stay updated with upcoming events and official announcements.' }}
+      </p>
+    </div>
+
+    <button
+      *ngIf="isAdmin"
+      class="create-btn"
+      type="button"
+      (click)="createEvent()"
+    >
+      <i class="pi pi-plus"></i>
+      Create Event
+    </button>
+  </div>
+
+  <div class="filter-tabs">
+    <button
+      type="button"
+      class="tab-btn"
+      [ngClass]="{ active: activeTab === 'All' }"
+      (click)="setActiveTab('All')"
+    >
+      All Events
+      <span>{{ allCount }}</span>
+    </button>
+
+    <button
+      type="button"
+      class="tab-btn"
+      [ngClass]="{ active: activeTab === 'Upcoming' }"
+      (click)="setActiveTab('Upcoming')"
+    >
+      Upcoming
+      <span>{{ upcomingCount }}</span>
+    </button>
+
+    <button
+      type="button"
+      class="tab-btn"
+      [ngClass]="{ active: activeTab === 'Ongoing' }"
+      (click)="setActiveTab('Ongoing')"
+    >
+      Ongoing
+      <span>{{ ongoingCount }}</span>
+    </button>
+
+    <button
+      type="button"
+      class="tab-btn"
+      [ngClass]="{ active: activeTab === 'Completed' }"
+      (click)="setActiveTab('Completed')"
+    >
+      Completed
+      <span>{{ completedCount }}</span>
+    </button>
+  </div>
+
+  <div class="events-grid" *ngIf="filteredEvents.length > 0; else emptyState">
+    <div class="event-card" *ngFor="let event of filteredEvents">
+      <div class="event-card-top">
+        <div class="top-row">
+          <h2>{{ event.title }}</h2>
+          <span class="status-badge">{{ event.status }}</span>
+        </div>
+
+        <span
+          class="type-badge"
+          [ngClass]="{
+            'career-fair': event.type === 'Career Fair',
+            'reunion': event.type === 'Reunion',
+            'webinar': event.type === 'Webinar',
+            'announcement': event.type === 'Announcement'
+          }"
+        >
+          {{ event.type }}
+        </span>
+      </div>
+
+      <div class="event-card-body">
+        <p class="description">{{ event.description }}</p>
+
+        <div class="meta">
+          <div class="meta-item">
+            <i class="pi pi-calendar"></i>
+            <span>{{ event.date }}</span>
+          </div>
+
+          <div class="meta-item">
+            <i class="pi pi-map-marker"></i>
+            <span>{{ event.location }}</span>
+          </div>
+        </div>
+
+        <div class="action-row" *ngIf="isAdmin; else alumniActions">
+          <button class="edit-btn" type="button" (click)="editEvent(event)">
+            <i class="pi pi-pencil"></i>
+            Edit
+          </button>
+
+          <button class="delete-btn" type="button" (click)="deleteEvent(event)">
+            <i class="pi pi-trash"></i>
+          </button>
+        </div>
+
+        <ng-template #alumniActions>
+          <div class="action-row alumni-action-row">
+            <button class="view-btn" type="button" (click)="viewDetails(event)">
+              <i class="pi pi-eye"></i>
+              View Details
+            </button>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <i class="pi pi-calendar-times"></i>
+      <h3>No events found</h3>
+      <p>There are no events or announcements in this category yet.</p>
+    </div>
+  </ng-template>
+</div>

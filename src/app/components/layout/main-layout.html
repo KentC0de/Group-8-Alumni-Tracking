@@ -1,0 +1,117 @@
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      {{ sidebarTitle }}
+    </div>
+
+    <div class="sidebar-links">
+      <!-- ADMIN MENU -->
+      <ng-container *ngIf="isAdmin">
+        <a routerLink="/admin/dashboard" routerLinkActive="active">
+          <i class="pi pi-home"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a routerLink="/admin/verify-alumni" routerLinkActive="active">
+          <i class="pi pi-user-plus"></i>
+          <span>Verify Alumni</span>
+        </a>
+
+        <a routerLink="/admin/manage-accounts" routerLinkActive="active">
+          <i class="pi pi-users"></i>
+          <span>Manage Accounts</span>
+        </a>
+
+        <a routerLink="/admin/alumni-records" routerLinkActive="active">
+          <i class="pi pi-id-card"></i>
+          <span>Alumni Records</span>
+        </a>
+
+        <a routerLink="/admin/reports" routerLinkActive="active">
+          <i class="pi pi-chart-bar"></i>
+          <span>Reports</span>
+        </a>
+
+        <a routerLink="/admin/events-announcements" routerLinkActive="active">
+          <i class="pi pi-calendar"></i>
+          <span>Events & Announcements</span>
+        </a>
+      </ng-container>
+
+      <!-- ALUMNI MENU -->
+      <ng-container *ngIf="isAlumni">
+        <a routerLink="/alumni/dashboard" routerLinkActive="active">
+          <i class="pi pi-home"></i>
+          <span>Dashboard</span>
+        </a>
+
+        <a routerLink="/alumni/profile" routerLinkActive="active">
+          <i class="pi pi-user"></i>
+          <span>My Profile</span>
+        </a>
+
+        <a routerLink="/alumni/status" routerLinkActive="active">
+          <i class="pi pi-shield"></i>
+          <span>My Status</span>
+        </a>
+
+        <a routerLink="/alumni/events-announcements" routerLinkActive="active">
+          <i class="pi pi-calendar"></i>
+          <span>Events & Announcements</span>
+        </a>
+
+        <a routerLink="/alumni/jobs" routerLinkActive="active">
+          <i class="pi pi-briefcase"></i>
+          <span>Job Opportunities</span>
+        </a>
+      </ng-container>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="logo-circle">
+          <i class="pi pi-graduation-cap"></i>
+        </div>
+
+        <div class="system-block">
+          <div class="system-name">Alumni Tracking & Management System</div>
+          <div class="system-subtitle">
+            University of Science and Technology of Southern Philippines Villanueva
+          </div>
+        </div>
+      </div>
+
+      <div class="topbar-right">
+        <button class="icon-btn">
+          <i class="pi pi-bell"></i>
+        </button>
+
+        <div class="profile-wrapper">
+          <button class="admin-chip" (click)="toggleMenu()">
+            <div class="admin-avatar">{{ avatarLetter }}</div>
+
+            <div class="admin-info">
+              <strong>{{ displayName }}</strong>
+              <span>{{ roleLabel }}</span>
+            </div>
+
+            <i class="pi pi-angle-down"></i>
+          </button>
+
+          <div class="profile-dropdown" *ngIf="menuOpen">
+            <button class="dropdown-item" (click)="logout()">
+              <i class="pi pi-sign-out"></i>
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

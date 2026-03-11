@@ -1,1 +1,142 @@
-<h2>Alumni Records</h2>
+<div class="alumni-records-page">
+  <div class="page-header-row">
+    <div class="page-header">
+      <h1>Alumni Records</h1>
+      <p>Complete database of all alumni.</p>
+    </div>
+
+    <button class="add-alumni-btn" type="button">
+      <i class="pi pi-plus"></i>
+      Add Alumni
+    </button>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card total-alumni">
+      <div class="stat-icon">
+        <i class="pi pi-users"></i>
+      </div>
+      <div class="stat-number">{{ totalAlumni }}</div>
+      <div class="stat-label">Total Alumni</div>
+    </div>
+
+    <div class="stat-card active-alumni">
+      <div class="stat-icon">
+        <i class="pi pi-check-circle"></i>
+      </div>
+      <div class="stat-number">{{ activeCount }}</div>
+      <div class="stat-label">Active</div>
+    </div>
+
+    <div class="stat-card pending-alumni">
+      <div class="stat-icon">
+        <i class="pi pi-clock"></i>
+      </div>
+      <div class="stat-number">{{ pendingCount }}</div>
+      <div class="stat-label">Pending</div>
+    </div>
+
+    <div class="stat-card rejected-alumni">
+      <div class="stat-icon">
+        <i class="pi pi-times-circle"></i>
+      </div>
+      <div class="stat-number">{{ rejectedCount }}</div>
+      <div class="stat-label">Rejected</div>
+    </div>
+  </div>
+
+  <div class="records-card">
+    <div class="records-card-header">
+      <div class="records-title">
+        <i class="pi pi-graduation-cap title-icon"></i>
+        <h2>All Alumni <span>({{ totalAlumni }})</span></h2>
+      </div>
+
+      <div class="records-controls">
+        <div class="search-box">
+          <i class="pi pi-search search-icon"></i>
+          <input
+            type="text"
+            placeholder="Search..."
+            [(ngModel)]="searchTerm"
+          />
+        </div>
+
+        <div class="filter-box">
+          <select [(ngModel)]="selectedStatus">
+            <option value="All Status">All Status</option>
+            <option value="Active">Active</option>
+            <option value="Pending">Pending</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+
+        <div class="filter-box">
+          <select [(ngModel)]="selectedCourse">
+            <option value="All Courses">All Courses</option>
+            <option value="BS Computer Science">BS Computer Science</option>
+            <option value="BS Information Technology">BS Information Technology</option>
+            <option value="BS Business Administration">BS Business Administration</option>
+            <option value="BS Accountancy">BS Accountancy</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="records-table">
+        <thead>
+          <tr>
+            <th>SCHOOL ID</th>
+            <th>NAME</th>
+            <th>EMAIL</th>
+            <th>COURSE</th>
+            <th>YEAR</th>
+            <th>EMPLOYMENT</th>
+            <th>STATUS</th>
+            <th class="actions-column">ACTIONS</th>
+          </tr>
+        </thead>
+
+        <tbody *ngIf="filteredRecords.length > 0">
+          <tr *ngFor="let record of filteredRecords">
+            <td>{{ record.schoolId }}</td>
+            <td class="name-cell">{{ record.name }}</td>
+            <td>{{ record.email }}</td>
+            <td>{{ record.course }}</td>
+            <td>{{ record.year }}</td>
+            <td>{{ record.employment }}</td>
+            <td>
+              <span
+                class="status-badge"
+                [ngClass]="{
+                  'status-active': record.status === 'Active',
+                  'status-pending': record.status === 'Pending',
+                  'status-rejected': record.status === 'Rejected'
+                }"
+              >
+                {{ record.status }}
+              </span>
+            </td>
+            <td class="actions-column">
+              <button class="action-btn edit-btn" type="button" (click)="editRecord(record)">
+                <i class="pi pi-pencil"></i>
+                Edit
+              </button>
+
+              <button class="action-btn delete-btn" type="button" (click)="deleteRecord(record)">
+                <i class="pi pi-trash"></i>
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="empty-state" *ngIf="filteredRecords.length === 0">
+        <i class="pi pi-graduation-cap empty-icon"></i>
+        <p>No alumni records found.</p>
+      </div>
+    </div>
+  </div>
+</div>

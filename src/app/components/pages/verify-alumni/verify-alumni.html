@@ -2,10 +2,9 @@
   <h2 class="title">Verify Alumni</h2>
   <p class="sub">Approve or reject accounts created from Sign Up.</p>
 
-  <div class="loading" *ngIf="loading">Loading...</div>
-
-  <div class="card">
-    <ng-container *ngIf="(pendingUsers$ | async) as pendingUsers">
+  <!-- ✅ show loading while pendingUsers$ has not emitted yet -->
+  <ng-container *ngIf="(pendingUsers$ | async) as pendingUsers; else loadingTpl">
+    <div class="card">
       <table class="tbl">
         <thead>
           <tr>
@@ -27,11 +26,15 @@
             </td>
           </tr>
 
-          <tr *ngIf="!loading && pendingUsers.length === 0">
+          <tr *ngIf="pendingUsers.length === 0">
             <td colspan="4" class="empty">No pending alumni to verify.</td>
           </tr>
         </tbody>
       </table>
-    </ng-container>
-  </div>
+    </div>
+  </ng-container>
+
+  <ng-template #loadingTpl>
+    <div class="loading">Loading...</div>
+  </ng-template>
 </div>

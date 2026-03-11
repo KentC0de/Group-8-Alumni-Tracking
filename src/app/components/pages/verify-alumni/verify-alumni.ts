@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { catchError, finalize, map, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, shareReplay, switchMap } from 'rxjs/operators';
 
 import { UsersService, User } from '../../../services/users.service';
 
@@ -14,39 +14,44 @@ import { UsersService, User } from '../../../services/users.service';
   styleUrls: ['./verify-alumni.scss'],
 })
 export class VerifyAlumniComponent {
-  loading = false;
-
-  // trigger refresh without needing "click twice"
   private refresh$ = new BehaviorSubject<void>(undefined);
 
-  // ✅ Use observable so Angular updates view automatically
+  // ✅ make loading reactive too (no ExpressionChanged error)
+  loading$: Observable<boolean> = this.refresh$.pipe(
+    switchMap(() =>
+      this.usersService.getPending().pipe(
+        map(() => false),
+        catchError(() => of(false))
+      )
+    ),
+    // start as true because refresh triggers load
+    // but easier: we show loading using pendingUsers$ (below)
+    shareReplay(1)
+  );
+
+  // ✅ pending alumni list
   pendingUsers$: Observable<User[]> = this.refresh$.pipe(
-    tap(() => (this.loading = true)),
     switchMap(() =>
       this.usersService.getPending().pipe(
         map((users) =>
           users.filter((u) => (u.role || '').toLowerCase() === 'alumni')
         ),
-        finalize(() => (this.loading = false)),
         catchError((err) => {
           console.log('VERIFY LOAD ERROR:', err);
-          this.loading = false;
-
           Swal.fire({
             icon: 'error',
             title: 'Failed to load',
             text: 'Cannot load pending alumni. Make sure json-server is running.',
           });
-
           return of([] as User[]);
         })
       )
-    )
+    ),
+    shareReplay(1)
   );
 
   constructor(private usersService: UsersService) {}
 
-  // call this to reload list
   loadPending() {
     this.refresh$.next();
   }
@@ -68,30 +73,25 @@ export class VerifyAlumniComponent {
     }).then((res) => {
       if (!res.isConfirmed) return;
 
-      this.loading = true;
-
-      this.usersService
-        .patch(u.id, { status: 'verified', isActive: true })
-        .pipe(finalize(() => (this.loading = false)))
-        .subscribe({
-          next: () => {
-            Swal.fire({
-              icon: 'success',
-              title: 'Verified!',
-              timer: 900,
-              showConfirmButton: false,
-            });
-            this.loadPending(); // ✅ refresh list
-          },
-          error: (err) => {
-            console.log('VERIFY PATCH ERROR:', err);
-            Swal.fire({
-              icon: 'error',
-              title: 'Verify failed',
-              text: 'Could not verify this account.',
-            });
-          },
-        });
+      this.usersService.patch(u.id, { status: 'verified', isActive: true }).subscribe({
+        next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Verified!',
+            timer: 900,
+            showConfirmButton: false,
+          });
+          this.loadPending();
+        },
+        error: (err) => {
+          console.log('VERIFY PATCH ERROR:', err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Verify failed',
+            text: 'Could not verify this account.',
+          });
+        },
+      });
     });
   }
 
@@ -113,30 +113,25 @@ export class VerifyAlumniComponent {
     }).then((res) => {
       if (!res.isConfirmed) return;
 
-      this.loading = true;
-
-      this.usersService
-        .patch(u.id, { status: 'rejected', isActive: false })
-        .pipe(finalize(() => (this.loading = false)))
-        .subscribe({
-          next: () => {
-            Swal.fire({
-              icon: 'success',
-              title: 'Rejected',
-              timer: 900,
-              showConfirmButton: false,
-            });
-            this.loadPending(); // ✅ refresh list
-          },
-          error: (err) => {
-            console.log('REJECT PATCH ERROR:', err);
-            Swal.fire({
-              icon: 'error',
-              title: 'Reject failed',
-              text: 'Could not reject this account.',
-            });
-          },
-        });
+      this.usersService.patch(u.id, { status: 'rejected', isActive: false }).subscribe({
+        next: () => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Rejected',
+            timer: 900,
+            showConfirmButton: false,
+          });
+          this.loadPending();
+        },
+        error: (err) => {
+          console.log('REJECT PATCH ERROR:', err);
+          Swal.fire({
+            icon: 'error',
+            title: 'Reject failed',
+            text: 'Could not reject this account.',
+          });
+        },
+      });
     });
   }
 }

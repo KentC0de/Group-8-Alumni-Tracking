@@ -4,8 +4,8 @@
       "id": "1",
       "schoolId": "ADMIN-0001",
       "fullName": "Admin User",
-      "email": "admin@test.com",
-      "password": "1234",
+      "email": "alumniadmin@gmail.com",
+      "password": "123",
       "role": "admin",
       "status": "verified",
       "isActive": true,
@@ -43,6 +43,28 @@
       "status": "verified",
       "isActive": true,
       "createdAt": "2026-02-28T01:12:39.587Z"
+    },
+    {
+      "id": "3ca1",
+      "schoolId": "2023307035",
+      "fullName": "Toto",
+      "email": "jezamayla09@gmail.com",
+      "password": "123",
+      "role": "alumni",
+      "status": "verified",
+      "isActive": true,
+      "createdAt": "2026-03-09T20:51:19.362Z"
+    },
+    {
+      "id": "de49",
+      "schoolId": "2023",
+      "fullName": "lala",
+      "email": "hndrxx541@gmail.com",
+      "password": "123",
+      "role": "alumni",
+      "status": "verified",
+      "isActive": true,
+      "createdAt": "2026-03-10T22:18:48.887Z"
     }
   ],
   "events": [

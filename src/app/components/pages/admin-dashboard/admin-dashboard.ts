@@ -26,7 +26,6 @@ export class AdminDashboardComponent implements OnInit {
   totalUsers = 0;
   pendingUsers = 0;
   activeUsers = 0;
-
   upcomingEvents = 0;
 
   pendingPreview: User[] = [];
@@ -50,14 +49,14 @@ export class AdminDashboardComponent implements OnInit {
     this.usersService.getAll()
       .pipe(finalize(() => {
         this.loadingStats = false;
-        this.cdr.markForCheck(); // ✅ ensures skeleton -> number swaps immediately
+        this.cdr.markForCheck();
       }))
       .subscribe({
         next: (users: User[]) => {
           this.totalUsers = users.length;
           this.pendingUsers = users.filter(u => u.status === 'pending').length;
           this.activeUsers = users.filter(u => u.isActive).length;
-          this.cdr.markForCheck(); // ✅ ensures numbers render without click
+          this.cdr.markForCheck();
         },
         error: (err) => console.error('Users API failed:', err),
       });

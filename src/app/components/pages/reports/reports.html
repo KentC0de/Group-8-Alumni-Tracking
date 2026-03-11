@@ -1,1 +1,124 @@
-<h2>Reports</h2>
+<div class="reports-page">
+  <div class="reports-header">
+    <div class="header-text">
+      <h1>Reports & Analytics</h1>
+      <p>Insights and statistics on alumni data.</p>
+    </div>
+
+    <button class="export-btn" type="button" (click)="exportReport()">
+      <i class="pi pi-download"></i>
+      Export Report
+    </button>
+  </div>
+
+  <div class="stats-grid">
+    <div
+      class="stat-card"
+      *ngFor="let card of statCards"
+      [ngClass]="card.theme"
+    >
+      <div class="stat-info">
+        <div class="stat-value">{{ card.value }}</div>
+        <div class="stat-label">{{ card.label }}</div>
+      </div>
+
+      <div class="stat-icon">
+        <i [class]="card.icon"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-grid two-column">
+    <div class="panel-card">
+      <div class="panel-header">
+        <h2>Graduates per Year</h2>
+        <p>Number of alumni by graduation year</p>
+      </div>
+
+      <div class="vertical-chart">
+        <div
+          class="vertical-bar-group"
+          *ngFor="let item of graduatesPerYear"
+        >
+          <div class="vertical-bar-track">
+            <div
+              class="vertical-bar-fill"
+              [style.height.px]="getYearBarHeight(item.count)"
+            ></div>
+          </div>
+          <div class="vertical-bar-value">{{ item.count }}</div>
+          <div class="vertical-bar-label">{{ item.year }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-card">
+      <div class="panel-header">
+        <h2>Alumni by Program</h2>
+        <p>Breakdown by academic program</p>
+      </div>
+
+      <div class="horizontal-chart">
+        <div
+          class="horizontal-row"
+          *ngFor="let item of alumniByProgram"
+        >
+          <div class="row-label">{{ item.program }}</div>
+
+          <div class="row-bar-track">
+            <div
+              class="row-bar-fill"
+              [style.width.%]="getProgramBarWidth(item.count)"
+            ></div>
+          </div>
+
+          <div class="row-value">{{ item.count }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-grid two-column">
+    <div class="panel-card">
+      <div class="panel-header">
+        <h2>Verification Status</h2>
+        <p>Breakdown by account status</p>
+      </div>
+
+      <div class="donut-section">
+        <div class="donut-chart verification-donut"></div>
+
+        <div class="legend-row">
+          <div
+            class="legend-item"
+            *ngFor="let item of verificationLegend"
+          >
+            <span class="legend-dot" [ngClass]="item.className"></span>
+            <span>{{ item.label }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-card">
+      <div class="panel-header">
+        <h2>Employment Status</h2>
+        <p>Breakdown by employment status</p>
+      </div>
+
+      <div class="donut-section">
+        <div class="donut-chart employment-donut"></div>
+
+        <div class="legend-row">
+          <div
+            class="legend-item"
+            *ngFor="let item of employmentLegend"
+          >
+            <span class="legend-dot" [ngClass]="item.className"></span>
+            <span>{{ item.label }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,117 @@
-<h2>Manage Accounts</h2>
+<div class="manage-accounts-page">
+  <div class="page-header">
+    <h1>Manage Accounts</h1>
+    <p>View and manage all system user accounts.</p>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card total-users">
+      <div class="stat-icon">
+        <i class="pi pi-users"></i>
+      </div>
+      <div class="stat-number">{{ totalUsers }}</div>
+      <div class="stat-label">Total Users</div>
+    </div>
+
+    <div class="stat-card admins">
+      <div class="stat-icon">
+        <i class="pi pi-shield"></i>
+      </div>
+      <div class="stat-number">{{ totalAdmins }}</div>
+      <div class="stat-label">Admins</div>
+    </div>
+
+    <div class="stat-card regular-users">
+      <div class="stat-icon">
+        <i class="pi pi-user"></i>
+      </div>
+      <div class="stat-number">{{ totalRegularUsers }}</div>
+      <div class="stat-label">Regular Users</div>
+    </div>
+
+    <div class="stat-card new-users">
+      <div class="stat-icon">
+        <i class="pi pi-user-plus"></i>
+      </div>
+      <div class="stat-number">{{ newThisMonth }}</div>
+      <div class="stat-label">New This Month</div>
+    </div>
+  </div>
+
+  <div class="accounts-card">
+    <div class="accounts-card-header">
+      <div class="accounts-title">
+        <i class="pi pi-users title-icon"></i>
+        <h2>All Accounts</h2>
+      </div>
+
+      <div class="accounts-controls">
+        <div class="search-box">
+          <i class="pi pi-search search-icon"></i>
+          <input
+            type="text"
+            placeholder="Search by name or email..."
+            [(ngModel)]="searchTerm"
+          />
+        </div>
+
+        <div class="role-filter">
+          <select [(ngModel)]="selectedRole">
+            <option value="All Roles">All Roles</option>
+            <option value="Admin">Admin</option>
+            <option value="Regular User">Regular User</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="accounts-table">
+        <thead>
+          <tr>
+            <th>NAME</th>
+            <th>EMAIL</th>
+            <th>ROLE</th>
+            <th>DATE JOINED</th>
+            <th class="actions-column">ACTIONS</th>
+          </tr>
+        </thead>
+
+        <tbody *ngIf="filteredAccounts.length > 0">
+          <tr *ngFor="let account of filteredAccounts">
+            <td class="name-cell">{{ account.name }}</td>
+            <td>{{ account.email }}</td>
+            <td>
+              <span
+                class="role-badge"
+                [ngClass]="{
+                  'role-admin': account.role === 'Admin',
+                  'role-regular': account.role === 'Regular User'
+                }"
+              >
+                {{ account.role }}
+              </span>
+            </td>
+            <td>{{ account.dateJoined }}</td>
+            <td class="actions-column">
+              <button class="action-btn edit-btn" type="button" (click)="editAccount(account)">
+                <i class="pi pi-pencil"></i>
+                Edit
+              </button>
+
+              <button class="action-btn delete-btn" type="button" (click)="deleteAccount(account)">
+                <i class="pi pi-trash"></i>
+                Delete
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="empty-state" *ngIf="filteredAccounts.length === 0">
+        <i class="pi pi-users empty-icon"></i>
+        <p>No accounts found.</p>
+      </div>
+    </div>
+  </div>
+</div>

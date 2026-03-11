@@ -1,4 +1,3 @@
-// src/app/services/users.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -32,24 +31,23 @@ export class UsersService {
     return this.http.get<User[]>(`${this.baseUrl}?status=pending`);
   }
 
-  // ✅ accept string | number
   patch(id: string | number, data: Partial<User>): Observable<User> {
     return this.http.patch<User>(`${this.baseUrl}/${id}`, data);
   }
 
-  verify(id: string | number) {
+  verify(id: string | number): Observable<User> {
     return this.patch(id, { status: 'verified' });
   }
 
-  reject(id: string | number) {
+  reject(id: string | number): Observable<User> {
     return this.patch(id, { status: 'rejected' });
   }
 
-  toggleActive(id: string | number, isActive: boolean) {
+  toggleActive(id: string | number, isActive: boolean): Observable<User> {
     return this.patch(id, { isActive });
   }
 
-  setRole(id: string | number, role: UserRole) {
+  setRole(id: string | number, role: UserRole): Observable<User> {
     return this.patch(id, { role });
   }
 
@@ -67,5 +65,32 @@ export class UsersService {
     return this.http.get<User[]>(
       `${this.baseUrl}?schoolId=${encodeURIComponent(schoolId)}`
     );
+  }
+
+  getCurrentUser(): User | null {
+    const data = localStorage.getItem('currentUser');
+    return data ? JSON.parse(data) : null;
+  }
+
+  getCurrentRole(): UserRole | null {
+    const user = this.getCurrentUser();
+    return user ? user.role : null;
+  }
+
+  isAdmin(): boolean {
+    return this.getCurrentRole() === 'admin';
+  }
+
+  isOfficer(): boolean {
+    return this.getCurrentRole() === 'officer';
+  }
+
+  isAlumni(): boolean {
+    return this.getCurrentRole() === 'alumni';
+  }
+
+  clearCurrentUser(): void {
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('token');
   }
 }
